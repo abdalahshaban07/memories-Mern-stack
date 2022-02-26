@@ -1,7 +1,7 @@
 import axios from "axios";
 
-const url = "http://localhost:5000/"; //local
-// const url = "https://memories-mern-project-app1.herokuapp.com/"; //heroku
+// const url = "http://localhost:5000/"; //local
+const url = "https://memories-mern-stack-1.herokuapp.com/"; //heroku
 
 const API = axios.create({ baseURL: url });
 
