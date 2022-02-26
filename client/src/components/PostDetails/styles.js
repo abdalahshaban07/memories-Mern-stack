@@ -4,9 +4,7 @@ export default makeStyles((theme) => ({
   media: {
     borderRadius: "20px",
     objectFit: "cover",
-    width: "40%",
-    height: "50%",
-    maxHeight: "400px",
+    maxHeight: "350px",
     [theme.breakpoints.down("sm")]: {
       width: "100%",
     },
@@ -23,6 +21,7 @@ export default makeStyles((theme) => ({
     borderRadius: "20px",
     margin: "10px",
     flex: 1,
+    wordBreak: "break-all",
   },
   imageSection: {
     marginLeft: "20px",
@@ -36,6 +35,12 @@ export default makeStyles((theme) => ({
     [theme.breakpoints.down("sm")]: {
       flexDirection: "column",
     },
+  },
+  recommendedImg: {
+    borderRadius: "20px",
+    width: "100%",
+    height: "250px",
+    objectFit: "cover",
   },
   loadingPaper: {
     display: "flex",

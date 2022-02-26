@@ -12,7 +12,7 @@ import {
 
 const initialState = {
   posts: [],
-  isLoading: false,
+  isLoading: true,
 };
 
 export default (state = initialState, { type, payload }) => {

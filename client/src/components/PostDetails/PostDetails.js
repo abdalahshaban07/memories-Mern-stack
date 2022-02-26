@@ -4,12 +4,13 @@ import {
   Typography,
   CircularProgress,
   Divider,
+  Grid,
 } from "@material-ui/core";
 import { useDispatch, useSelector } from "react-redux";
 import moment from "moment";
 import { useParams, useNavigate } from "react-router-dom";
 import useStyles from "./styles";
-import { getPost, getPostsBySearch } from "../../actions/posts";
+import { getPost } from "../../actions/posts";
 
 const PostDetails = () => {
   const { post, posts, isLoading } = useSelector((state) => state.posts);
@@ -23,16 +24,9 @@ const PostDetails = () => {
     dispatch(getPost(id));
   }, [id]);
 
-  // useEffect(() => {
-  //   if (post) {
-  //     dispatch(getPostsBySearch({ tags: post?.tags.join(",") }));
-  //   }
-  // }, [post]);
-
   const recommendedPosts = posts.filter(({ _id }) => _id !== id);
   const openPost = (_id) => navigate(`/posts/${_id}`);
 
-  if (!post) return null;
   if (isLoading)
     return (
       <Paper elevation={6} className={classes.loadingPaper}>
@@ -40,11 +34,17 @@ const PostDetails = () => {
       </Paper>
     );
 
+  if (!post && !isLoading) return null;
+
   return (
     <Paper style={{ padding: "20px", borderRadius: "15px" }} elevation={6}>
       <div className={classes.card}>
         <div className={classes.section}>
-          <Typography variant="h3" component="h2">
+          <Typography
+            variant="h3"
+            component="h2"
+            style={{ wordBreak: "break-all" }}
+          >
             {post.title}
           </Typography>
           <Typography
@@ -92,25 +92,38 @@ const PostDetails = () => {
           <div className={classes.recommendedPosts}>
             {recommendedPosts.map(
               ({ title, name, message, likes, selectedFile, _id }) => (
-                <div
-                  style={{ margin: "20px", cursor: "pointer" }}
-                  onClick={() => openPost(_id)}
+                <Grid
+                  className={classes.container}
+                  container
+                  alignItems="stretch"
+                  spacing={3}
                   key={_id}
                 >
-                  <Typography gutterBottom variant="h6">
-                    {title}
-                  </Typography>
-                  <Typography gutterBottom variant="subtitle2">
-                    {name}
-                  </Typography>
-                  <Typography gutterBottom variant="subtitle2">
-                    {message}
-                  </Typography>
-                  <Typography gutterBottom variant="subtitle1">
-                    Likes: {likes.length}
-                  </Typography>
-                  <img src={selectedFile} width="200px" />
-                </div>
+                  <Grid item>
+                    <div
+                      style={{ margin: "20px", cursor: "pointer" }}
+                      onClick={() => openPost(_id)}
+                      key={_id}
+                    >
+                      <Typography gutterBottom variant="h6">
+                        {title}
+                      </Typography>
+                      <Typography gutterBottom variant="subtitle2">
+                        {name}
+                      </Typography>
+                      <Typography gutterBottom variant="subtitle2">
+                        {message}
+                      </Typography>
+                      <Typography gutterBottom variant="subtitle1">
+                        Likes: {likes.length}
+                      </Typography>
+                      <img
+                        className={classes.recommendedImg}
+                        src={selectedFile}
+                      />
+                    </div>
+                  </Grid>
+                </Grid>
               )
             )}
           </div>

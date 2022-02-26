@@ -32,7 +32,9 @@ const Posts = ({ setCurrentId }) => {
     );
   }
 
-  return (
+  return isLoading ? (
+    <CircularProgress />
+  ) : (
     <Grid
       className={classes.mainContainer}
       container
