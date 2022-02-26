@@ -11,4 +11,9 @@ export default makeStyles((theme) => ({
   actionDiv: {
     textAlign: "center",
   },
+  pagination: {
+    borderRadius: 4,
+    marginTop: "1rem",
+    padding: "16px",
+  },
 }));

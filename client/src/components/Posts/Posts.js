@@ -6,9 +6,9 @@ import useStyles from "./styles";
 
 const Posts = ({ setCurrentId }) => {
   const classes = useStyles();
-  const posts = useSelector((state) => state.posts);
+  const { posts, isLoading } = useSelector((state) => state.posts);
 
-  if (posts.length === 0) {
+  if (!isLoading && !posts.length) {
     return (
       <Paper>
         <Typography variant="h6" align="center">
@@ -18,17 +18,29 @@ const Posts = ({ setCurrentId }) => {
     );
   }
 
-  return !posts.length ? (
-    <CircularProgress />
-  ) : (
+  if (isLoading) {
+    return (
+      <div
+        style={{
+          display: "flex",
+          justifyContent: "center",
+          height: "100%",
+        }}
+      >
+        <CircularProgress />
+      </div>
+    );
+  }
+
+  return (
     <Grid
       className={classes.mainContainer}
       container
       alignItems="stretch"
       spacing={3}
     >
-      {posts.map((post) => (
-        <Grid key={post._id} item xs={12} sm={6}>
+      {posts?.map((post) => (
+        <Grid key={post._id} item xs={12} sm={12} md={4} lg={3}>
           <Post post={post} setCurrentId={setCurrentId} />
         </Grid>
       ))}

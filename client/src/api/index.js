@@ -14,7 +14,11 @@ API.interceptors.request.use((req) => {
   return req;
 });
 
-export const fetchPosts = () => API.get("posts");
+export const fetchPosts = (page) => API.get(`/posts?page=${page}`);
+export const fetchPost = (id) => API.get(`/posts/${id}`);
+
+export const fetchPostsBySearch = ({ search, tags }) =>
+  API.get(`/posts/search?searchQuery=${search || "none"}&tags=${tags}`);
 
 export const ceatePost = (newPost) => API.post("posts", newPost);
 
