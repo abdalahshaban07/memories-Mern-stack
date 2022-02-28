@@ -39,7 +39,7 @@ const CommentSection = ({ post }) => {
             Comments
           </Typography>
           {comments.map((c, i) => (
-            <>
+            <div ref={commentsRef}>
               <Typography
                 key={i}
                 gutterBottom
@@ -48,9 +48,8 @@ const CommentSection = ({ post }) => {
               >
                 <strong>{c.split(":")[0]}</strong> {c.split(":")[1]}
               </Typography>
-            </>
+            </div>
           ))}
-          <div ref={commentsRef} />
         </Grid>
         {user?.result?.name ? (
           <Grid item xs={8}>
