@@ -52,7 +52,7 @@ const CommentSection = ({ post }) => {
           ))}
           <div ref={commentsRef} />
         </Grid>
-        {user?.result?.name && (
+        {user?.result?.name ? (
           <Grid item xs={8}>
             <Typography gutterBottom variant="h6" color="initial">
               Write a Comment
@@ -76,6 +76,12 @@ const CommentSection = ({ post }) => {
             >
               {loadingBtn ? <CircularProgress size={25} /> : "Comment"}
             </Button>
+          </Grid>
+        ) : (
+          <Grid item xs={8} style={{ textAlign: "center" }}>
+            <Typography gutterBottom variant="h6" color="initial">
+              Sign in to comment
+            </Typography>
           </Grid>
         )}
       </Grid>
