@@ -9,6 +9,7 @@ const START_LOADING = "START_LOADING";
 const END_LOADING = "END_LOADING";
 
 const FETCH_POST = "FETCH_POST";
+const ADD_COMMENT = "ADD_COMMENT";
 
 const AUTH = "AUTH";
 const LOGOUT = "LOGOUT";
@@ -25,4 +26,5 @@ export {
   START_LOADING,
   END_LOADING,
   FETCH_POST,
+  ADD_COMMENT,
 };

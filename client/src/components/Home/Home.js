@@ -13,8 +13,8 @@ import ChipInput from "material-ui-chip-input";
 import Posts from "../Posts/Posts";
 import Form from "../Form/Form";
 import useStyles from "./styles";
-import { useDispatch } from "react-redux";
-import { getPosts, getPostsBySearch } from "../../actions/posts";
+import { useDispatch, useSelector } from "react-redux";
+import { getPostsBySearch } from "../../actions/posts";
 import Pagination from "../Pagination/Pagination";
 
 function useQuery() {
@@ -34,7 +34,6 @@ const Home = () => {
 
   const searchPost = () => {
     if (search.trim() || tags.length) {
-      console.log({ search, tags });
       dispatch(getPostsBySearch({ search, tags: tags.join(",") }));
       navigate(
         `/posts/search?searchQuery=${search || "none"}&tags=${

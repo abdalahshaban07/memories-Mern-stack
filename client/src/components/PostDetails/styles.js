@@ -4,7 +4,9 @@ export default makeStyles((theme) => ({
   media: {
     borderRadius: "20px",
     objectFit: "cover",
-    maxHeight: "350px",
+    width: "100%",
+    height: "100%",
+    maxHeight: "400px",
     [theme.breakpoints.down("sm")]: {
       width: "100%",
     },
@@ -25,7 +27,7 @@ export default makeStyles((theme) => ({
   },
   imageSection: {
     marginLeft: "20px",
-    display: "contents",
+
     [theme.breakpoints.down("sm")]: {
       marginLeft: 0,
     },
@@ -49,5 +51,13 @@ export default makeStyles((theme) => ({
     padding: "20px",
     borderRadius: "15px",
     height: "39vh",
+  },
+  commentsOuterContainer: {
+    display: "flex",
+    justifyContent: "space-between",
+  },
+  commentsInnerContainer: {
+    height: "200px",
+    overflowY: "auto",
   },
 }));

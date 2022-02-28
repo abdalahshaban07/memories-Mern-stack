@@ -11,6 +11,7 @@ import moment from "moment";
 import { useParams, useNavigate } from "react-router-dom";
 import useStyles from "./styles";
 import { getPost } from "../../actions/posts";
+import CommentSection from "./CommentSection";
 
 const PostDetails = () => {
   const { post, posts, isLoading } = useSelector((state) => state.posts);
@@ -38,13 +39,16 @@ const PostDetails = () => {
 
   return (
     <Paper style={{ padding: "20px", borderRadius: "15px" }} elevation={6}>
-      <div className={classes.card}>
-        <div className={classes.section}>
-          <Typography
-            variant="h3"
-            component="h2"
-            style={{ wordBreak: "break-all" }}
-          >
+      <Grid container spacing={2}>
+        <Grid
+          item
+          xs={12}
+          sm={12}
+          md={6}
+          lg={7}
+          style={{ wordBreak: "break-all" }}
+        >
+          <Typography variant="h3" component="h2">
             {post.title}
           </Typography>
           <Typography
@@ -62,17 +66,15 @@ const PostDetails = () => {
           <Typography variant="body1">
             {moment(post.createdAt).fromNow()}
           </Typography>
-          <Divider style={{ margin: "20px 0" }} />
+          {/* <Divider style={{ margin: "20px 0" }} />
           <Typography variant="body1">
             <strong>Realtime Chat - coming soon!</strong>
-          </Typography>
+          </Typography> */}
           <Divider style={{ margin: "20px 0" }} />
-          <Typography variant="body1">
-            <strong>Comments - coming soon!</strong>
-          </Typography>
+          <CommentSection post={post} />
           <Divider style={{ margin: "20px 0" }} />
-        </div>
-        <div className={classes.imageSection}>
+        </Grid>
+        <Grid item xs={12} sm={12} md={6} lg={5}>
           <img
             className={classes.media}
             src={
@@ -81,8 +83,9 @@ const PostDetails = () => {
             }
             alt={post.title}
           />
-        </div>
-      </div>
+        </Grid>
+      </Grid>
+
       {!!recommendedPosts.length && (
         <div className={classes.section}>
           <Typography gutterBottom variant="h5">

@@ -9,6 +9,7 @@ import {
   START_LOADING,
   END_LOADING,
   FETCH_POST,
+  ADD_COMMENT,
 } from "../constants/actionTypes";
 
 // Action creaters
@@ -42,7 +43,6 @@ export const getPostsBySearch = (searchQuery) => async (dispatch) => {
       data: { data },
     } = await api.fetchPostsBySearch(searchQuery);
 
-    console.log({ data });
     dispatch({ type: SEAECH, payload: data });
     dispatch({ type: END_LOADING });
   } catch (error) {
@@ -71,8 +71,8 @@ export const updatePost = (id, post) => async (dispatch) => {
 
 export const deletePost = (id) => async (dispatch) => {
   try {
-    await api.deletePost(id);
-    dispatch({ type: DELETE, payload: id });
+    const { data } = await api.deletePost(id);
+    dispatch({ type: DELETE, payload: data });
   } catch (error) {
     console.log(error.message);
   }
@@ -82,6 +82,16 @@ export const likePost = (id) => async (dispatch) => {
   try {
     const { data } = await api.likePost(id);
     dispatch({ type: LIKE, payload: data });
+  } catch (error) {
+    console.log(error.message);
+  }
+};
+
+export const commentPost = (comment, id) => async (dispatch) => {
+  try {
+    const { data } = await api.commentPost(comment, id);
+    dispatch({ type: ADD_COMMENT, payload: data });
+    return data.comments;
   } catch (error) {
     console.log(error.message);
   }

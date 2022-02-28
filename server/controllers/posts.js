@@ -59,8 +59,13 @@ export const createPost = async (req, res) => {
   });
 
   try {
+    const LIMIT = 4;
+    const total = await PostMessage.countDocuments({});
     await newPostMessage.save();
-    res.status(201).json(newPostMessage);
+
+    res
+      .status(201)
+      .json({ post: newPostMessage, numPages: Math.ceil(total / LIMIT) });
   } catch (error) {
     res.status(409).json({ message: error.message });
   }
@@ -89,9 +94,11 @@ export const deletePost = async (req, res) => {
 
   if (!mongoose.Types.ObjectId.isValid(id))
     return res.status(404).send("No post with that id");
-
+  const LIMIT = 4;
+  const total = await PostMessage.countDocuments({});
   await PostMessage.findByIdAndRemove(id);
-  res.json({ message: "Post deleted successfully" });
+
+  res.json({ id, numPages: Math.ceil(total / LIMIT) });
 };
 
 export const likePost = async (req, res) => {
@@ -113,6 +120,25 @@ export const likePost = async (req, res) => {
     //unlike post
     post.likes = post.likes.filter((id) => id !== String(req.userId));
   }
+
+  const updatedPost = await PostMessage.findByIdAndUpdate(id, post, {
+    new: true,
+  });
+
+  res.json(updatedPost);
+};
+
+export const commentPost = async (req, res) => {
+  const { id } = req.params;
+  const { comment } = req.body;
+
+  if (!req.userId) return res.json({ message: "Unauthenticated" });
+
+  if (!mongoose.Types.ObjectId.isValid(id))
+    return res.status(404).send("No post with that id");
+
+  const post = await PostMessage.findById(id);
+  post.comments.push(comment);
 
   const updatedPost = await PostMessage.findByIdAndUpdate(id, post, {
     new: true,

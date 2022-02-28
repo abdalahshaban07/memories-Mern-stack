@@ -8,6 +8,7 @@ import {
   START_LOADING,
   END_LOADING,
   FETCH_POST,
+  ADD_COMMENT,
 } from "../constants/actionTypes";
 
 const initialState = {
@@ -31,7 +32,11 @@ export default (state = initialState, { type, payload }) => {
     case SEAECH:
       return { ...state, posts: payload };
     case CREATE:
-      return { ...state, posts: [...state.posts, payload] };
+      return {
+        ...state,
+        posts: [...state.posts, payload.post],
+        numPages: payload.numPages,
+      };
     case UPDATE:
     case LIKE:
       return {
@@ -43,11 +48,19 @@ export default (state = initialState, { type, payload }) => {
     case DELETE:
       return {
         ...state,
-        posts: state.posts.filter((post) => post._id !== payload),
+        posts: state.posts.filter((post) => post._id !== payload.id),
+        numPages: payload.numPages,
       };
     case FETCH_POST:
       return { ...state, post: payload };
-
+    case ADD_COMMENT:
+      return {
+        ...state,
+        posts: state.posts.map((post) => {
+          if (post._id === payload._id) return payload;
+          return post;
+        }),
+      };
     default:
       return state;
   }

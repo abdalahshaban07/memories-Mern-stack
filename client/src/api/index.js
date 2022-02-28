@@ -1,7 +1,7 @@
 import axios from "axios";
 
-// const url = "http://localhost:5000/"; //local
-const url = "https://memories-mern-stack-1.herokuapp.com/"; //heroku
+const url = "http://localhost:5000/"; //local
+// const url = "https://memories-mern-stack-1.herokuapp.com/"; //heroku
 
 const API = axios.create({ baseURL: url });
 
@@ -28,6 +28,8 @@ export const updatePost = (id, updatedPost) =>
 export const deletePost = (id) => API.delete(`posts/${id}`);
 
 export const likePost = (id) => API.patch(`posts/${id}/likePost`);
+export const commentPost = (comment, id) =>
+  API.post(`posts/${id}/commentPost`, { comment });
 
 export const signin = (formData) => API.post("user/signin", formData);
 export const signup = (formData) => API.post("user/signup", formData);
