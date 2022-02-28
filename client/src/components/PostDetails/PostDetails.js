@@ -10,7 +10,7 @@ import { useDispatch, useSelector } from "react-redux";
 import moment from "moment";
 import { useParams, useNavigate } from "react-router-dom";
 import useStyles from "./styles";
-import { getPost } from "../../actions/posts";
+import { getPost, getPostsBySearch } from "../../actions/posts";
 import CommentSection from "./CommentSection";
 
 const PostDetails = () => {
@@ -24,6 +24,14 @@ const PostDetails = () => {
   useEffect(() => {
     dispatch(getPost(id));
   }, [id]);
+
+  useEffect(() => {
+    if (post) {
+      dispatch(
+        getPostsBySearch({ search: "none", tags: post?.tags.join(",") })
+      );
+    }
+  }, [post]);
 
   const recommendedPosts = posts.filter(({ _id }) => _id !== id);
   const openPost = (_id) => navigate(`/posts/${_id}`);

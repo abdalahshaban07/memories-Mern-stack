@@ -53,7 +53,7 @@ export const getPostsBySearch = (searchQuery) => async (dispatch) => {
 export const creatPost = (post, navigate) => async (dispatch) => {
   try {
     const { data } = await api.ceatePost(post);
-    navigate(`/posts/${data._id}`);
+    navigate(`/posts/${data.post._id}`);
     dispatch({ type: CREATE, payload: data });
   } catch (error) {
     console.log(error.message);
