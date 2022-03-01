@@ -10,6 +10,7 @@ import {
 import { useDispatch } from "react-redux";
 import useStyles from "./styles";
 import { commentPost } from "../../actions/posts";
+import ScrollToBottom from "react-scroll-to-bottom";
 
 const CommentSection = ({ post }) => {
   const dispatch = useDispatch();
@@ -33,26 +34,28 @@ const CommentSection = ({ post }) => {
   return (
     <div>
       <Grid container spacing={2}>
-        <Grid item xs={4} className={classes.commentsInnerContainer}>
+        <Grid item xs={5}>
           <Typography gutterBottom variant="h6" color="initial">
             Comments
           </Typography>
-          {comments.map((c, i) => (
-            <>
-              <Typography
-                key={i}
-                gutterBottom
-                variant="subtitle1"
-                color="initial"
-              >
-                <strong>{c.split(":")[0]}</strong> {c.split(":")[1]}
-              </Typography>
-            </>
-          ))}
-          <div ref={commentsRef}></div>
+          <ScrollToBottom className={classes.commentsInnerContainer}>
+            {comments.map((c, i) => (
+              <>
+                <Typography
+                  key={i}
+                  gutterBottom
+                  variant="subtitle1"
+                  color="initial"
+                >
+                  <strong>{c.split(":")[0]}</strong> {c.split(":")[1]}
+                </Typography>
+              </>
+            ))}
+            <div ref={commentsRef}></div>
+          </ScrollToBottom>
         </Grid>
         {user?.result?.name ? (
-          <Grid item xs={8}>
+          <Grid item xs={7}>
             <Typography gutterBottom variant="h6" color="initial">
               Write a Comment
             </Typography>
@@ -77,7 +80,7 @@ const CommentSection = ({ post }) => {
             </Button>
           </Grid>
         ) : (
-          <Grid item xs={8} style={{ textAlign: "center" }}>
+          <Grid item xs={7} style={{ textAlign: "center" }}>
             <Typography gutterBottom variant="h6" color="initial">
               Sign in to comment
             </Typography>
