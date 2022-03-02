@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import {
   Container,
   Grow,
@@ -7,6 +7,7 @@ import {
   AppBar,
   TextField,
   Button,
+  CircularProgress,
 } from "@material-ui/core";
 import { useNavigate, useLocation } from "react-router-dom";
 import ChipInput from "material-ui-chip-input";
@@ -33,10 +34,12 @@ const Home = () => {
   const [search, setSearch] = useState("");
   const [tags, setTags] = useState([]);
   const { t } = useTranslation();
+  const [loadingBtn, setLoadingBtn] = useState(false);
 
-  const searchPost = () => {
+  const searchPost = async () => {
+    setLoadingBtn(true);
     if (search.trim() || tags.length) {
-      dispatch(getPostsBySearch({ search, tags: tags.join(",") }));
+      await dispatch(getPostsBySearch({ search, tags: tags.join(",") }));
       navigate(
         `/posts/search?searchQuery=${search || "none"}&tags=${
           tags.join(",") || "none"
@@ -45,6 +48,7 @@ const Home = () => {
     } else {
       navigate(`/`);
     }
+    setLoadingBtn(false);
   };
 
   const handleKeyPress = (e) => {
@@ -103,8 +107,9 @@ const Home = () => {
                 className={classes.searchButton}
                 onClick={searchPost}
                 variant="contained"
+                disabled={loadingBtn}
               >
-                {t("search")}
+                {loadingBtn ? <CircularProgress size={25} /> : t("search")}
               </Button>
             </AppBar>
             <Form currentId={currentId} setCurrentId={setCurrentId} />
