@@ -11,6 +11,7 @@ import { useDispatch } from "react-redux";
 import useStyles from "./styles";
 import { commentPost } from "../../actions/posts";
 import ScrollToBottom from "react-scroll-to-bottom";
+import { useTranslation } from "react-i18next";
 
 const CommentSection = ({ post }) => {
   const dispatch = useDispatch();
@@ -20,6 +21,7 @@ const CommentSection = ({ post }) => {
   const user = JSON.parse(localStorage.getItem("profile"));
   const [loadingBtn, setLoadingBtn] = useState(false);
   const commentsRef = useRef();
+  const { t } = useTranslation();
 
   const handleClick = async () => {
     setLoadingBtn(true);
@@ -36,20 +38,18 @@ const CommentSection = ({ post }) => {
       <Grid container spacing={2}>
         <Grid item xs={5}>
           <Typography gutterBottom variant="h6" color="initial">
-            Comments
+            {t("comments")}
           </Typography>
           <ScrollToBottom className={classes.commentsInnerContainer}>
             {comments.map((c, i) => (
-              <>
-                <Typography
-                  key={i}
-                  gutterBottom
-                  variant="subtitle1"
-                  color="initial"
-                >
-                  <strong>{c.split(":")[0]}</strong> {c.split(":")[1]}
-                </Typography>
-              </>
+              <Typography
+                key={i}
+                gutterBottom
+                variant="subtitle1"
+                color="initial"
+              >
+                <strong>{c.split(":")[0]}</strong> {c.split(":")[1]}
+              </Typography>
             ))}
             <div ref={commentsRef}></div>
           </ScrollToBottom>
@@ -57,11 +57,11 @@ const CommentSection = ({ post }) => {
         {user?.result?.name ? (
           <Grid item xs={7}>
             <Typography gutterBottom variant="h6" color="initial">
-              Write a Comment
+              {t("write_comment")}
             </Typography>
             <TextField
               fullWidth
-              label="Comment"
+              label={t("comment")}
               rows={4}
               variant="outlined"
               multiline
@@ -76,13 +76,13 @@ const CommentSection = ({ post }) => {
               color="primary"
               onClick={handleClick}
             >
-              {loadingBtn ? <CircularProgress size={25} /> : "Comment"}
+              {loadingBtn ? <CircularProgress size={25} /> : t("comment")}
             </Button>
           </Grid>
         ) : (
           <Grid item xs={7} style={{ textAlign: "center" }}>
             <Typography gutterBottom variant="h6" color="initial">
-              Sign in to comment
+              {t("sign_to_comment")}
             </Typography>
           </Grid>
         )}

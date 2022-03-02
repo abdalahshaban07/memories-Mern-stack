@@ -27,7 +27,7 @@ export default makeStyles((theme) => ({
   toolbar: {
     display: "flex",
     justifyContent: "flex-end",
-    width: "400px",
+    width: "max-content",
     [theme.breakpoints.down("sm")]: {
       width: "auto",
     },

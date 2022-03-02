@@ -3,16 +3,18 @@ import { Grid, CircularProgress, Paper, Typography } from "@material-ui/core";
 import { useSelector } from "react-redux";
 import Post from "./Post/Post";
 import useStyles from "./styles";
+import { useTranslation } from "react-i18next";
 
 const Posts = ({ setCurrentId }) => {
   const classes = useStyles();
   const { posts, isLoading } = useSelector((state) => state.posts);
+  const { t } = useTranslation();
 
   if (!isLoading && !posts.length) {
     return (
       <Paper>
         <Typography variant="h6" align="center">
-          No posts yet.
+          {t("no_memories")}
         </Typography>
       </Paper>
     );

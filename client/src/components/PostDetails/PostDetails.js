@@ -7,14 +7,16 @@ import {
   Grid,
 } from "@material-ui/core";
 import { useDispatch, useSelector } from "react-redux";
-import moment from "moment";
 import { useParams, useNavigate } from "react-router-dom";
 import useStyles from "./styles";
 import { getPost, getPostsBySearch } from "../../actions/posts";
 import CommentSection from "./CommentSection";
+import { useTranslation } from "react-i18next";
+import Moment from "react-moment";
 
 const PostDetails = () => {
   const { post, posts, isLoading } = useSelector((state) => state.posts);
+  const { t } = useTranslation();
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -70,9 +72,11 @@ const PostDetails = () => {
           <Typography gutterBottom variant="body1" component="p">
             {post.message}
           </Typography>
-          <Typography variant="h6">Created by: {post.name}</Typography>
+          <Typography variant="h6">
+            {t("created_by")}: {post.name}
+          </Typography>
           <Typography variant="body1">
-            {moment(post.createdAt).fromNow()}
+            <Moment fromNow>{post.createdAt}</Moment>
           </Typography>
           {/* <Divider style={{ margin: "20px 0" }} />
           <Typography variant="body1">
@@ -97,7 +101,7 @@ const PostDetails = () => {
       {!!recommendedPosts.length && (
         <div className={classes.section}>
           <Typography gutterBottom variant="h5">
-            You might also like:
+            {t("also_like")}
           </Typography>
           <Divider />
           <div className={classes.recommendedPosts}>
@@ -126,7 +130,7 @@ const PostDetails = () => {
                         {message}
                       </Typography>
                       <Typography gutterBottom variant="subtitle1">
-                        Likes: {likes.length}
+                        {t("likes")}: {likes.length}
                       </Typography>
                       <img
                         className={classes.recommendedImg}

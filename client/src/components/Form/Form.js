@@ -7,6 +7,7 @@ import { useSelector } from "react-redux";
 import { creatPost, updatePost } from "../../actions/posts";
 import ChipInput from "material-ui-chip-input";
 import { useNavigate } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 
 const Form = ({ currentId, setCurrentId }) => {
   const post = useSelector((state) =>
@@ -16,6 +17,7 @@ const Form = ({ currentId, setCurrentId }) => {
   const classes = useStyles();
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const { t } = useTranslation();
 
   const user = JSON.parse(localStorage.getItem("profile"));
 
@@ -67,7 +69,7 @@ const Form = ({ currentId, setCurrentId }) => {
     return (
       <Paper className={classes.paper}>
         <Typography variant="h6" align="center">
-          Please Sign In to create your own memories and like other's memories.
+          {t("please_sign_in")}
         </Typography>
       </Paper>
     );
@@ -82,12 +84,12 @@ const Form = ({ currentId, setCurrentId }) => {
         onSubmit={handleSubmit}
       >
         <Typography variant="h6">
-          {currentId ? `Editing "${post?.title}"` : "Creating a Memory"}
+          {currentId ? `${t("edit")} "${post?.title}"` : t("create_memory")}
         </Typography>
         <TextField
           name="title"
           variant="outlined"
-          label="Title"
+          label={t("title")}
           fullWidth
           value={postData.title}
           onChange={(e) => setPostData({ ...postData, title: e.target.value })}
@@ -95,7 +97,7 @@ const Form = ({ currentId, setCurrentId }) => {
         <TextField
           name="message"
           variant="outlined"
-          label="Message"
+          label={t("message")}
           fullWidth
           multiline
           rows={4}
@@ -108,7 +110,7 @@ const Form = ({ currentId, setCurrentId }) => {
           <ChipInput
             name="tags"
             variant="outlined"
-            label="Tags"
+            label={t("tags")}
             fullWidth
             value={postData.tags}
             onAdd={(chip) => handleAddChip(chip)}
@@ -132,7 +134,7 @@ const Form = ({ currentId, setCurrentId }) => {
           type="submit"
           fullWidth
         >
-          Submit
+          {t("submit")}
         </Button>
         <Button
           variant="contained"
@@ -141,7 +143,7 @@ const Form = ({ currentId, setCurrentId }) => {
           onClick={clear}
           fullWidth
         >
-          Clear
+          {t("clear")}
         </Button>
       </form>
     </Paper>

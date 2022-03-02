@@ -16,6 +16,7 @@ import Icon from "./Icon";
 import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
 import useStyles from "./styles";
 import Input from "./Input";
+import { useTranslation } from "react-i18next";
 
 import { signin, signup } from "../../actions/auth";
 
@@ -34,6 +35,7 @@ const Auth = () => {
   const [formData, setFormData] = useState(initialState);
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const { t } = useTranslation();
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -77,21 +79,23 @@ const Auth = () => {
         <Avatar className={classes.avatar}>
           <LockOutlinedIcon />
         </Avatar>
-        <Typography variant="h5">{isSignup ? "Sign up" : "Sign In"}</Typography>
+        <Typography variant="h5">
+          {isSignup ? t("sign_up") : t("sign_in")}
+        </Typography>
         <form className={classes.form} onSubmit={handleSubmit}>
           <Grid container spacing={2}>
             {isSignup && (
               <>
                 <Input
                   name="firstName"
-                  label="First Name"
+                  label={t("fName")}
                   handleChange={handleChange}
                   autoFocus
                   half
                 />
                 <Input
                   name="lastName"
-                  label="Last Name"
+                  label={t("lName")}
                   handleChange={handleChange}
                   autoFocus
                   half
@@ -100,13 +104,13 @@ const Auth = () => {
             )}
             <Input
               name="email"
-              label="Email Address"
+              label={t("email")}
               handleChange={handleChange}
               type="email"
             />
             <Input
               name="password"
-              label="Password"
+              label={t("password")}
               handleChange={handleChange}
               type={showPassword ? "text" : "password"}
               handleShowPassword={handleShowPassword}
@@ -114,7 +118,7 @@ const Auth = () => {
             {isSignup && (
               <Input
                 name="confirmPassword"
-                label="Repeat Password"
+                label={t("repeat_password")}
                 handleChange={handleChange}
                 type="password"
               />
@@ -127,7 +131,7 @@ const Auth = () => {
             color="primary"
             className={classes.submit}
           >
-            {isSignup ? "Sign up" : "Sign In"}
+            {isSignup ? t("sign_up") : t("sign_in")}
           </Button>
           <GoogleLogin
             clientId="463917997764-nuh76nku7h9uqakkjm098s7ofcl6bq32.apps.googleusercontent.com"
@@ -141,7 +145,7 @@ const Auth = () => {
                 startIcon={<Icon />}
                 variant="contained"
               >
-                Google Sign In
+                {t("google_sign_in")}
               </Button>
             )}
             onSuccess={googleSuccess}
@@ -154,8 +158,8 @@ const Auth = () => {
           <Grid item>
             <Button onClick={switchMode}>
               {isSignup
-                ? "already have an account? Sign In"
-                : "Don't have an account? Sign Up"}
+                ? t("already_have_an_account")
+                : t("dont_have_an_account")}
             </Button>
           </Grid>
         </Grid>

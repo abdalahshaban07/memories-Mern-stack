@@ -6,18 +6,17 @@ import {
   CardMedia,
   Button,
   Typography,
-  ButtonBase,
 } from "@material-ui/core";
-
 import ThumbUpAltIcon from "@material-ui/icons/ThumbUpAlt";
 import ThumbUpAltIconOutlined from "@material-ui/icons/ThumbUpAltOutlined";
 import DeleteIcon from "@material-ui/icons/Delete";
 import MoreHorizIcon from "@material-ui/icons/MoreHoriz";
-import moment from "moment";
+import Moment from "react-moment";
 import { useDispatch } from "react-redux";
 import { deletePost, likePost } from "../../../actions/posts";
 import useStyles from "./styles";
 import { useNavigate } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 
 const Post = ({ post, setCurrentId }) => {
   const classes = useStyles();
@@ -25,6 +24,7 @@ const Post = ({ post, setCurrentId }) => {
   const user = JSON.parse(localStorage.getItem("profile"));
   const navigate = useNavigate();
   const [likes, setLikes] = useState(post?.likes);
+  const { t } = useTranslation();
 
   const deletePostHandle = () => {
     dispatch(deletePost(post._id));
@@ -51,20 +51,20 @@ const Post = ({ post, setCurrentId }) => {
         <>
           <ThumbUpAltIcon fontSize="small" /> &nbsp;{" "}
           {likes.length > 2
-            ? `You and ${likes.length - 1} others`
-            : `${likes.length} like ${likes.length > 1 ? "s" : ""}`}
+            ? `${t("you")}${likes.length - 1} ${t("others")}`
+            : `${likes.length} ${t("like")} ${likes.length > 1 ? "s" : ""}`}
         </>
       ) : (
         <>
           <ThumbUpAltIconOutlined fontSize="small" />
-          &nbsp;{likes.length} {likes.length === 1 ? "like" : "likes"}
+          &nbsp;{likes.length} {likes.length === 1 ? t("like") : t("likes")}
         </>
       );
     }
 
     return (
       <>
-        <ThumbUpAltIconOutlined fontSize="small" /> &nbsp;likes
+        <ThumbUpAltIconOutlined fontSize="small" /> &nbsp;{t("like")}
       </>
     );
   };
@@ -79,7 +79,7 @@ const Post = ({ post, setCurrentId }) => {
       <div className={classes.overlay}>
         <Typography variant="h6">{post.name}</Typography>
         <Typography variant="body2">
-          {moment(post.createdAt).fromNow()}
+          <Moment fromNow>{post.createdAt}</Moment>
         </Typography>
       </div>
       {(user?.result?.googleId === post?.creator ||
@@ -125,7 +125,7 @@ const Post = ({ post, setCurrentId }) => {
             onClick={() => deletePostHandle()}
           >
             <DeleteIcon fontSize="small" />
-            Delete
+            {t("delete")}
           </Button>
         )}
       </CardActions>

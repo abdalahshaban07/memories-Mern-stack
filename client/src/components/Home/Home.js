@@ -16,6 +16,7 @@ import useStyles from "./styles";
 import { useDispatch, useSelector } from "react-redux";
 import { getPostsBySearch } from "../../actions/posts";
 import Pagination from "../Pagination/Pagination";
+import { useTranslation } from "react-i18next";
 
 function useQuery() {
   return new URLSearchParams(useLocation().search);
@@ -31,6 +32,7 @@ const Home = () => {
   const searchQuery = query.get("searchQuery");
   const [search, setSearch] = useState("");
   const [tags, setTags] = useState([]);
+  const { t } = useTranslation();
 
   const searchPost = () => {
     if (search.trim() || tags.length) {
@@ -82,7 +84,7 @@ const Home = () => {
               <TextField
                 name="search"
                 variant="outlined"
-                label="Search Memories"
+                label={t("search_memories")}
                 fullWidth
                 value={search}
                 onChange={(e) => setSearch(e.target.value)}
@@ -93,7 +95,7 @@ const Home = () => {
                 value={tags}
                 onAdd={handleAdd}
                 onDelete={handleDelete}
-                label="Search Tags"
+                label={t("search_tags")}
                 variant="outlined"
               />
               <Button
@@ -102,7 +104,7 @@ const Home = () => {
                 onClick={searchPost}
                 variant="contained"
               >
-                Search
+                {t("search")}
               </Button>
             </AppBar>
             <Form currentId={currentId} setCurrentId={setCurrentId} />
