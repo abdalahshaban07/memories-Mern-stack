@@ -9,14 +9,18 @@ import {
   Menu,
   MenuItem,
 } from "@material-ui/core";
-import PopupState, { bindTrigger, bindMenu } from "material-ui-popup-state";
+import ToggleButton from "@material-ui/lab/ToggleButton";
+import ToggleButtonGroup from "@material-ui/lab/ToggleButtonGroup";
 import Language from "@material-ui/icons/Language";
-import { useDispatch } from "react-redux";
+import Brightness4Icon from "@material-ui/icons/Brightness4";
+import WbSunnyIcon from "@material-ui/icons/WbSunny";
+import PopupState, { bindTrigger, bindMenu } from "material-ui-popup-state";
+import { useDispatch, useSelector } from "react-redux";
 import useStyles from "./styles";
 import memoriesLogo from "../../images/memories.png";
-import memoriesText from "../../images/memoriesText.png";
 import decode from "jwt-decode";
-import { LOGOUT } from "../../constants/actionTypes";
+import { LIGHT, LOGOUT } from "../../constants/actionTypes";
+import { themeDark, themeLight } from "../../actions/theme";
 import { useTranslation } from "react-i18next";
 import { languages } from "./Languages";
 import i18next from "i18next";
@@ -36,6 +40,7 @@ const Navbar = () => {
   const currentLanguageCode = cookies.get("i18next") || "en";
   const currentLanguage = languages.find((l) => l.code === currentLanguageCode);
   moment.locale(getLanguage());
+  const themeState = useSelector((state) => state.theme);
 
   useEffect(() => {
     const token = user?.token;
@@ -57,10 +62,14 @@ const Navbar = () => {
     setUser(null);
   };
 
+  const handleThemeChange = (event, newMode) => {
+    themeState === LIGHT ? dispatch(themeDark()) : dispatch(themeLight());
+  };
+
   return (
     <AppBar className={classes.appBar} position="static" color="inherit">
       <Link to="/" className={classes.brandContainer}>
-        <img src={memoriesText} alt="icon" height="45px" />
+        <Typography className={classes.title}>{t("memories")}</Typography>
         <span style={{ display: "inline-block", marginInline: "5px" }}></span>
         <img
           className={classes.image}
@@ -107,6 +116,17 @@ const Navbar = () => {
           </>
         )}
 
+        <div style={{ marginInlineStart: "1rem" }}>
+          <ToggleButtonGroup color="primary" onChange={handleThemeChange}>
+            <ToggleButton value={themeState}>
+              {themeState === LIGHT ? (
+                <Brightness4Icon color="primary" />
+              ) : (
+                <WbSunnyIcon className={classes.sun} />
+              )}
+            </ToggleButton>
+          </ToggleButtonGroup>
+        </div>
         <div style={{ marginInlineStart: "1rem" }}>
           <PopupState variant="popper" popupId="demo-popup-menu" st>
             {(popupState) => (

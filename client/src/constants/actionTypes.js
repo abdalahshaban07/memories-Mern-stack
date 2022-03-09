@@ -14,6 +14,9 @@ const ADD_COMMENT = "ADD_COMMENT";
 const AUTH = "AUTH";
 const LOGOUT = "LOGOUT";
 
+const LIGHT = "light";
+const DARK = "dark";
+
 export {
   CREATE,
   UPDATE,
@@ -27,4 +30,6 @@ export {
   END_LOADING,
   FETCH_POST,
   ADD_COMMENT,
+  LIGHT,
+  DARK,
 };

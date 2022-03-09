@@ -1,5 +1,5 @@
 import { makeStyles } from "@material-ui/core/styles";
-import { deepPurple } from "@material-ui/core/colors";
+import { deepPurple, lightBlue } from "@material-ui/core/colors";
 
 export default makeStyles((theme) => ({
   appBar: {
@@ -22,7 +22,6 @@ export default makeStyles((theme) => ({
   },
   image: {
     marginLeft: "10px",
-    marginTop: "5px",
   },
   toolbar: {
     display: "flex",
@@ -54,9 +53,23 @@ export default makeStyles((theme) => ({
   brandContainer: {
     display: "flex",
     alignItems: "center",
+    textDecoration: "none",
   },
   purple: {
     color: theme.palette.getContrastText(deepPurple[500]),
     backgroundColor: deepPurple[500],
+  },
+  sun: {
+    color: "yellow",
+  },
+  title: {
+    height: "45px",
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
+    fontSize: "3rem",
+    fontWeight: 900,
+    [theme.palette.type === "dark" ? "color" : ""]: lightBlue[500],
+    [theme.palette.type === "light" ? "color" : ""]: "#1976d2",
   },
 }));
